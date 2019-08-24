@@ -160,9 +160,6 @@ section.resume-section .resume-item .resume-date {
 }
 
 @media (min-width: 768px) {
-  section.resume-section {
-    min-height: 100vh;
-  }
   section.resume-section .resume-item .resume-date {
     min-width: 18rem;
   }
@@ -173,6 +170,10 @@ section.resume-section .resume-item .resume-date {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
   }
+}
+
+section.resume-section-fill {
+  min-height: 90vh;
 }
 
 .bg-primary {
