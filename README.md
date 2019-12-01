@@ -1,9 +1,5 @@
 # Rhys Bower
 
-> **Currently looking for new software engineering opportunities in the Greater Seattle and San Francisco Bay areas.**
->
-> Feel free to send me an [email](mailto:bowerrhys@gmail.com) if you would like to talk.
-
 Source code of my personal website where I highlight past experience.
 
 ## Theme
