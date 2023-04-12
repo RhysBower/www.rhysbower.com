@@ -1,20 +1,23 @@
 "use strict";
 
 // Load plugins
-const autoprefixer = require("gulp-autoprefixer");
-const browsersync = require("browser-sync").create();
-const cleanCSS = require("gulp-clean-css");
-const del = require("del");
-const gulp = require("gulp");
-const header = require("gulp-header");
-const merge = require("merge-stream");
-const plumber = require("gulp-plumber");
-const rename = require("gulp-rename");
-const sass = require("gulp-sass");
-const uglify = require("gulp-uglify");
+import autoprefixer from "gulp-autoprefixer";
+import browsersyncImport from "browser-sync";
+const browsersync = browsersyncImport.create();
+import cleanCSS from "gulp-clean-css";
+import { deleteAsync as del } from 'del';
+import gulp from "gulp";
+import header from "gulp-header";
+import merge from "merge-stream";
+import plumber from "gulp-plumber";
+import rename from "gulp-rename";
+import sassCompiler from "sass";
+import gulpSass from "gulp-sass";
+const sass = gulpSass(sassCompiler);
+import uglify from "gulp-uglify";
 
 // Load package.json for banner
-const pkg = require('./package.json');
+import pkg from './package.json' assert { type: "json" };
 
 // Set the banner content
 const banner = ['/*!\n',
@@ -43,7 +46,7 @@ function browserSyncReload(done) {
 }
 
 // Clean vendor
-function clean() {
+export function clean() {
   return del(["./vendor/"]);
 }
 
@@ -71,7 +74,7 @@ function modules() {
 }
 
 // CSS task
-function css() {
+export function css() {
   return gulp
     .src("./scss/**/*.scss")
     .pipe(plumber())
@@ -81,7 +84,6 @@ function css() {
     }))
     .on("error", sass.logError)
     .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
       cascade: false
     }))
     .pipe(header(banner, {
@@ -97,7 +99,7 @@ function css() {
 }
 
 // JS task
-function js() {
+export function js() {
   return gulp
     .src([
       './js/*.js',
@@ -122,15 +124,8 @@ function watchFiles() {
 }
 
 // Define complex tasks
-const vendor = gulp.series(clean, modules);
-const build = gulp.series(vendor, gulp.parallel(css, js));
-const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
+export const vendor = gulp.series(clean, modules);
+export const build = gulp.series(vendor, gulp.parallel(css, js));
+export const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
-// Export tasks
-exports.css = css;
-exports.js = js;
-exports.clean = clean;
-exports.vendor = vendor;
-exports.build = build;
-exports.watch = watch;
-exports.default = build;
+export default build;
